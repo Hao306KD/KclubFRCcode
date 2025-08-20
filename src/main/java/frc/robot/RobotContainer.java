@@ -5,7 +5,11 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.subsystems.CANdleSystem;
 import frc.robot.subsystems.drive;
+
+import com.ctre.phoenix.led.FireAnimation;
+
 // import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger; //. = 下一级
@@ -24,6 +28,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
   private final drive m_ExampleDriveSystem = new drive();
+  private final CANdleSystem m_Candle = new CANdleSystem();
     //实体化子系统 + 赋值
     //相当于 car car1 = new car() 加上private实体化
     //命令1 命令2 命令3... 都是另一个子系统的指令
@@ -70,14 +75,19 @@ public class RobotContainer {
           //whiletrye = 按下时持续触发
           //onFalse = 松开时触发
           //这里是在按键b松开时触发
+          //andThen
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
-    m_driverController.b().whileTrue(m_ExampleDriveSystem.motorB_Voltage_Command(2));
-    m_driverController.b().whileFalse(m_ExampleDriveSystem.motorB_Voltage_Command(0));
+    m_driverController.b().onTrue(
+      m_ExampleDriveSystem.motorB_Position_Command(50).andThen(m_Candle.changeAnimation1(CANdleSystem.AnimationTypes.ColorFlow))
+      );
+    m_driverController.x().onTrue(
+      m_ExampleDriveSystem.motorB_Position_Command(0).andThen(m_Candle.changeAnimation1(CANdleSystem.AnimationTypes.SetAll))
+      );
 
-    m_driverController.a().onTrue(m_ExampleDriveSystem.motorA_Voltage_Command(2));
-    m_driverController.x().onFalse(m_ExampleDriveSystem.motorA_Voltage_Command(0));
+    m_driverController.a().onTrue(m_ExampleDriveSystem.motorA_Position_Command(2));
+    m_driverController.a().onFalse(m_ExampleDriveSystem.motorA_Position_Command(0));
     //m_driverController.b().whileFalse(m_ExampleDriveSystem.motor_Voltage_Command(0));
     //xBoxController + 按键 = Trigger
   }

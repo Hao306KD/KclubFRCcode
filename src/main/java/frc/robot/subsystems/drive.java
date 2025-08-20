@@ -4,7 +4,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -18,13 +20,13 @@ public class drive extends SubsystemBase {
 
   // 控制
   //父子类
-  private final TalonFX m_test_motor1 = new TalonFX(1, "rio");
-  private final TalonFX m_test_motor2 = new TalonFX(2, "rio");
+  private final TalonFX m_test_motor1 = new TalonFX(11, "rio");
+ // private final TalonFX m_test_motor2 = new TalonFX(12, "rio");
 
   private final TalonFX m_test_motor3 = new TalonFX(3, "rio");
   private final TalonFX m_test_motor4 = new TalonFX(4, "rio");
   //控制请求
-  private final VoltageOut m_test_motor_request = new VoltageOut(0.0);
+  private final MotionMagicVoltage m_test_motor_request = new MotionMagicVoltage(0.0);
 
   //实际控制
   //封装出来的方法
@@ -32,26 +34,28 @@ public class drive extends SubsystemBase {
   //        2. 速度
 
   //newPosition能够将高级的控制请求和
-  public void setmotorBVoltage(double voltage) {
-    m_test_motor1.setControl(m_test_motor_request.withOutput(voltage));
-    m_test_motor2.setControl(m_test_motor_request.withOutput(voltage));
+  public void setmotorBPosition(double Position) {
+    m_test_motor1.setControl(m_test_motor_request.withPosition(Position));
+    // m_test_motor2.setControl(m_test_motor_request.withPosition(Position));
   }
 
-  public void setmotorAVoltage(double voltage) {
-    m_test_motor3.setControl(m_test_motor_request.withOutput(voltage));
-    m_test_motor4.setControl(m_test_motor_request.withOutput(voltage));
+  public void setmotorAPosition(double Position) {
+    m_test_motor3.setControl(m_test_motor_request.withPosition(Position));
+    m_test_motor4.setControl(m_test_motor_request.withPosition(Position));
   }
 
   //控制电压的command
-  public Command motorB_Voltage_Command(double voltage){
-    return run(()->{
-      setmotorBVoltage(voltage); // Set the motor to move at 1000 units per second
-    });
+  public Command motorB_Position_Command(double Position){
+    return runOnce(()->{
+      setmotorBPosition(Position); // Set the motor to move at 1000 units per second
+    }
+    );
   }
-  public Command motorA_Voltage_Command(double voltage){
-    return run(()->{
-      setmotorAVoltage(voltage); // Set the motor to move at 1000 units per second
-    });
+  public Command motorA_Position_Command(double Position){
+    return runOnce(()->{
+      setmotorAPosition(Position); // Set the motor to move at 1000 units per second
+    }
+    );
   }
 
   /** Creates a new ExampleSubsystem. */
@@ -71,7 +75,7 @@ public class drive extends SubsystemBase {
       motorConfigs.MotionMagic.MotionMagicJerk = 0; // Jerk is around 0
 
       m_test_motor1.getConfigurator().apply(motorConfigs);
-      m_test_motor2.getConfigurator().apply(motorConfigs);
+      //m_test_motor2.getConfigurator().apply(motorConfigs);
       m_test_motor3.getConfigurator().apply(motorConfigs);
       m_test_motor4.getConfigurator().apply(motorConfigs);
   }
