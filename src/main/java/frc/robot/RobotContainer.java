@@ -86,7 +86,7 @@ public class RobotContainer {
       m_ExampleDriveSystem.motorB_Position_Command(0).andThen(m_Candle.changeAnimation1(CANdleSystem.AnimationTypes.SetAll))
       );
 
-    m_driverController.a().onTrue(m_ExampleDriveSystem.motorA_Position_Command(2));
+    m_driverController.a().onTrue(m_ExampleDriveSystem.motorA_Position_Command(10));
     m_driverController.a().onFalse(m_ExampleDriveSystem.motorA_Position_Command(0));
     //m_driverController.b().whileFalse(m_ExampleDriveSystem.motor_Voltage_Command(0));
     //xBoxController + 按键 = Trigger
