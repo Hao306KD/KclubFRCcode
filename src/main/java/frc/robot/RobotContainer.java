@@ -79,15 +79,24 @@ public class RobotContainer {
 
     // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
     // cancelling on release.
+    
     m_driverController.b().onTrue(
-      m_ExampleDriveSystem.motorB_Position_Command(50).andThen(m_Candle.changeAnimation1(CANdleSystem.AnimationTypes.ColorFlow))
-      );
-    m_driverController.x().onTrue(
-      m_ExampleDriveSystem.motorB_Position_Command(0).andThen(m_Candle.changeAnimation1(CANdleSystem.AnimationTypes.SetAll))
+      m_ExampleDriveSystem.motorB_Velocity_Command(10)
+      .andThen(m_ExampleDriveSystem.cmd_motor1Command(50))
+      .andThen(m_ExampleDriveSystem.motorB_Velocity_Command(0))
+      .andThen(m_Candle.changeAnimation1(CANdleSystem.AnimationTypes.Rainbow))
       );
 
-    m_driverController.a().onTrue(m_ExampleDriveSystem.motorA_Position_Command(10));
-    m_driverController.a().onFalse(m_ExampleDriveSystem.motorA_Position_Command(0));
+    m_driverController.x().onTrue(m_ExampleDriveSystem.motorB_Velocity_Command(10)
+      .andThen(m_ExampleDriveSystem.cmd_motor1Command(0))
+      .andThen(m_ExampleDriveSystem.motorB_Velocity_Command(0))
+      .andThen(m_Candle.changeAnimation1(CANdleSystem.AnimationTypes.RgbFade))
+      );
+      
+    
+
+    // m_driverController.a().onTrue(m_ExampleDriveSystem.motorA_Position_Command(10));
+    // m_driverController.a().onFalse(m_ExampleDriveSystem.motorA_Position_Command(0));
     //m_driverController.b().whileFalse(m_ExampleDriveSystem.motor_Voltage_Command(0));
     //xBoxController + 按键 = Trigger
   }

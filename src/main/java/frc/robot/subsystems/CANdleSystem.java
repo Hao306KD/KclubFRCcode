@@ -2,6 +2,11 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
+//用速度控制和位置控制分别控制直驱轮和转向轮，速度控制用velocitycurrentfoc，注意电机参数
+//                                        位置控制用motionmagicvoltage，注意电机参数
+//实现的目标：按下一个按键，转向轮位置到50，直驱电机以10的速度旋转，当转向轮位置到达后，两个电机都停止运动，亮一种花样灯效
+//按下第二个按键，转向轮位置到0，直驱电机以-10的速度旋转，当转向轮位置到达后，两个电机都停止运动，亮另一种花样灯效
+
 
 
 package frc.robot.subsystems;
@@ -31,7 +36,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class CANdleSystem extends SubsystemBase {
-    private final CANdle m_candle = new CANdle(1, "rio");
+    private final CANdle m_candle = new CANdle(3, "rio");
     private final int LedCount = 300;//设的比较小会导致灯带只走一半
 
     private Animation m_toAnimate = null;//下面要用的动画
