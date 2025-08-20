@@ -29,7 +29,7 @@ public class RobotContainer {
 
   private final drive m_ExampleDriveSystem = new drive();
   private final CANdleSystem m_Candle = new CANdleSystem();
-    //实体化子系统 + 赋值
+    //实体化子系统 + 赋值///
     //相当于 car car1 = new car() 加上private实体化
     //命令1 命令2 命令3... 都是另一个子系统的指令
     //把所有命令都要转化到手柄上控制
